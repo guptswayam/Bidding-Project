@@ -1,0 +1,15 @@
+.mainDiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.image {
+    max-width: 400px;
+    max-height: 220px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 1px 1px 4px gray;
+    padding: 5px;
+    border: 1px solid black;
+}

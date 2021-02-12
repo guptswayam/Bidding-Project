@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import {useSelector, useDispatch} from "react-redux"
 import './App.css';
+import Navbar from './components/Navbar/Navbar';
+import Routes from './routes';
+import { checkAuth, logout } from './store/actions/auth';
 
-function App() {
+
+const App = () => {
+
+  const {authUser, appLoading} = useSelector(state=>({authUser: state.authReducer.user, appLoading: state.authReducer.loading}))
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    dispatch(checkAuth())
+  }, [])
+
+  const logoutHandler = () => {
+    dispatch(logout())
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {!appLoading && 
+        <div className="App" style={{marginTop: "20px"}}>
+        
+          <Navbar user={authUser} logoutHandler={logoutHandler} />
+          <div style={{marginLeft: '100px', marginRight: "20px"}}>
+            <Routes user={authUser} />
+          </div>
+        </div>  
+      }
+    </BrowserRouter>
   );
 }
 
